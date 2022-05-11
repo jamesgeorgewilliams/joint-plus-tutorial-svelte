@@ -6,6 +6,9 @@
     import { HyperlinkHighlighter } from './hyperlink-highlighter';
     import '../node_modules/@clientio/rappid/rappid.css';
 
+
+    let tabIndex = 0;
+
     // Create the default tab state
     const createTabState = (title: string, json?: any) => {
         const graph = new dia.Graph({ id: util.uuid() }, { cellNamespace: shapes });
@@ -26,6 +29,13 @@
     // Add a new tab with a new graph
     const addTab = () => {
         tabs = [...tabs, createTabState(`Tab ${tabs.length + 1}`)]
+        tabIndex = tabs.length
+    }
+
+    // Remove a tab at the specified index
+    const removeTab = (index) => {
+        tabs = tabs.filter((_, i) => i !== index);
+        tabIndex = Math.max(Math.min(index, tabs.length - 2), 0);
     }
 </script>
 
@@ -34,6 +44,9 @@
 		{#each tabs as tab, i }
             <Tab>
                 {tab.title}
+                <button
+                    on:click={() => removeTab(i)}
+                >x</button>
             </Tab>
         {/each}
         <button
