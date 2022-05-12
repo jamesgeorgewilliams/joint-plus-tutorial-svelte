@@ -1,16 +1,13 @@
 <script lang="ts">
     import { Tabs, TabList, TabPanel, Tab } from './components/tabs';
     import Graph from './components/Graph.svelte';
-    import { HyperlinkHighlighter } from './hyperlink-highlighter';
+    import { tabStore } from './store';
     import '../node_modules/@clientio/rappid/rappid.css';
-
-    import {tabStore} from './store';
 
     let tabs;
 
-    tabStore.subscribe((val) => {
-        tabs = val;
-        console.log(val)
+    tabStore.subscribe((store) => {
+        tabs = store;
     });
 
 </script>

@@ -1,12 +1,13 @@
 <script>
     import { onMount } from 'svelte';
     import { dia, ui, shapes } from '@clientio/rappid';
+    import { HyperlinkHighlighter } from '../hyperlink-highlighter.ts';
     import { tabStore } from '../store';
 
     let tabs;
 
-    tabStore.subscribe((val) => {
-        tabs = val;
+    tabStore.subscribe((store) => {
+        tabs = store;
     });
 
     export let index;
