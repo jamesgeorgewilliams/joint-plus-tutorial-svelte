@@ -8,8 +8,6 @@
 	registerPanel(panel);
 </script>
 
-<div>
-    {#if $selectedPanel === panel}
-	    <slot></slot>
-    {/if}
-</div>
+{#if $selectedPanel === panel}
+	<slot></slot>
+{/if}

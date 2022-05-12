@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { dia, ui, shapes, util } from '@clientio/rappid';
+    import { dia, shapes, util } from '@clientio/rappid';
     import { Tabs, TabList, TabPanel, Tab } from './components/tabs';
+    import Graph from './components/Graph.svelte';
     import { TabsData } from './tabs-data'
     import { HyperlinkHighlighter } from './hyperlink-highlighter';
     import '../node_modules/@clientio/rappid/rappid.css';
 
-
     let tabIndex = 0;
 
+    const theme = 'material';
+    
     // Create the default tab state
     const createTabState = (title: string, json?: any) => {
         const graph = new dia.Graph({ id: util.uuid() }, { cellNamespace: shapes });
@@ -28,11 +29,11 @@
 
     // Add a new tab with a new graph
     const addTab = () => {
-        tabs = [...tabs, createTabState(`Tab ${tabs.length + 1}`)]
-        tabIndex = tabs.length
+        tabs = [...tabs, createTabState(`Tab ${tabs.length + 1}`)];
+        tabIndex = tabs.length;
     }
 
-    // Remove a tab at the specified index
+    // // Remove a tab at the specified index
     const removeTab = (index) => {
         tabs = tabs.filter((_, i) => i !== index);
         tabIndex = Math.max(Math.min(index, tabs.length - 2), 0);
@@ -40,23 +41,23 @@
 </script>
 
 <Tabs>
-	<TabList>
-		{#each tabs as tab, i }
+    <TabList>
+        {#each tabs as tab, i }
             <Tab>
                 {tab.title}
-                <button
-                    on:click={() => removeTab(i)}
-                >x</button>
             </Tab>
+            <button on:click={() => removeTab(i)}>x</button>
         {/each}
-        <button
-            on:click={addTab}
-        >+</button>
-	</TabList>
-
-	{#each tabs as tab, i }
+        <button on:click={addTab}>+</button>
+    </TabList>
+    {#each tabs as tab, i }
         <TabPanel>
             <h2>{tab.title}</h2>
+            <svelte:component 
+                this={Graph}
+                tabs={tabs}
+                index={i}
+            ></svelte:component>
             {i}
         </TabPanel>
     {/each}

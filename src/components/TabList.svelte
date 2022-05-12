@@ -1,6 +1,6 @@
-<ul class="tab-list">
+<div class="tab-list">
 	<slot></slot>
-</ul>
+</div>
 
 <style>
 	.tab-list {
