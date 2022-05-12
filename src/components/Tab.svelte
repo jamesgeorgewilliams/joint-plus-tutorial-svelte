@@ -3,7 +3,7 @@
 	import { TABS } from './Tabs.svelte';
 
 	const tab = {};
-	const { registerTab, selectTab, selectedTab } = getContext(TABS);
+	const { registerTab, selectTab, removeTab, selectedTab } = getContext(TABS);
 
 	registerTab(tab);
 </script>
@@ -26,4 +26,5 @@
 
 <button class:selected="{$selectedTab === tab}" on:click="{() => selectTab(tab)}">
 	<slot></slot>
+    <button on:click="{() => removeTab(tab)}">x</button>
 </button>

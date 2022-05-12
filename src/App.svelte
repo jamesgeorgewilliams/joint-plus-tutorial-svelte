@@ -6,59 +6,27 @@
     import { HyperlinkHighlighter } from './hyperlink-highlighter';
     import '../node_modules/@clientio/rappid/rappid.css';
 
-    let tabIndex = 0;
+    import {tabStore} from './store';
 
-    const theme = 'material';
-    
-    // Create the default tab state
-    const createTabState = (title: string, json?: any) => {
-        const graph = new dia.Graph({ id: util.uuid() }, { cellNamespace: shapes });
-        let focusPoint;
-        if (json) {
-            graph.fromJSON(json);
-            focusPoint = graph.getBBox()?.center().toJSON();
-        }
-        return {
-            title,
-            graph,
-            focusPoint
-        }
-    }
+    let tabs;
 
-    let tabs = TabsData.map(({ title, json }) => createTabState(title, json));
-
-    // Add a new tab with a new graph
-    const addTab = () => {
-        tabs = [...tabs, createTabState(`Tab ${tabs.length + 1}`)];
-        tabIndex = tabs.length;
-    }
-
-    // // Remove a tab at the specified index
-    const removeTab = (index) => {
-        tabs = tabs.filter((_, i) => i !== index);
-        tabIndex = Math.max(Math.min(index, tabs.length - 2), 0);
-    }
+    tabStore.subscribe((val) => {
+        tabs = val;
+        console.log(val)
+    });
 </script>
 
 <Tabs>
     <TabList>
-        {#each tabs as tab, i }
+        {#each tabs as tab }
             <Tab>
-                {tab.title}
+                {tab.id}
             </Tab>
-            <button on:click={() => removeTab(i)}>x</button>
         {/each}
-        <button on:click={addTab}>+</button>
     </TabList>
-    {#each tabs as tab, i }
+    {#each tabs as tab }
         <TabPanel>
-            <h2>{tab.title}</h2>
-            <svelte:component 
-                this={Graph}
-                tabs={tabs}
-                index={i}
-            ></svelte:component>
-            {i}
+            {tab.name}
         </TabPanel>
     {/each}
 </Tabs>
