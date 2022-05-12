@@ -1,9 +1,15 @@
 <script>
     import { onMount } from 'svelte';
     import { dia, ui, shapes } from '@clientio/rappid';
+    import { tabStore } from '../store';
+
+    let tabs;
+
+    tabStore.subscribe((val) => {
+        tabs = val;
+    });
 
     export let index;
-    export let tabs;
 
     let paper;
     let scroller;
@@ -44,12 +50,6 @@
         paper.on('blank:pointerdown', (evt) => {
             scroller.startPanning(evt);
         });
-
-        if (focusPoint) {
-            scroller.center(focusPoint.x, focusPoint.y);
-        } else {
-            scroller.center();
-        }
 
         paper.unfreeze();
 	});

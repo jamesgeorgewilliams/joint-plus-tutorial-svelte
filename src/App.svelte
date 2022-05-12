@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { dia, shapes, util } from '@clientio/rappid';
     import { Tabs, TabList, TabPanel, Tab } from './components/tabs';
     import Graph from './components/Graph.svelte';
-    import { TabsData } from './tabs-data'
     import { HyperlinkHighlighter } from './hyperlink-highlighter';
     import '../node_modules/@clientio/rappid/rappid.css';
 
@@ -14,6 +12,7 @@
         tabs = val;
         console.log(val)
     });
+
 </script>
 
 <Tabs>
@@ -24,8 +23,9 @@
             </Tab>
         {/each}
     </TabList>
-    {#each tabs as tab }
+    {#each tabs as tab, i }
         <TabPanel>
+            <Graph index={i}></Graph>
             {tab.title}
         </TabPanel>
     {/each}

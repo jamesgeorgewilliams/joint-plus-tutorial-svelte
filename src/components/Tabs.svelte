@@ -44,6 +44,8 @@
         removeTab: tab => {
             const index = tabs.indexOf(tab);
             tabStore.update((store) => store.filter((_,i) => i !== index));
+            selectedTab.set(tabs[index - 1]);
+			selectedPanel.set(panels[index - 1]);
         },
 
         addTab: () => {
