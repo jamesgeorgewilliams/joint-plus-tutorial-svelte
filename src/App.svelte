@@ -20,13 +20,13 @@
     <TabList>
         {#each tabs as tab }
             <Tab>
-                {tab.id}
+                {tab.title}
             </Tab>
         {/each}
     </TabList>
     {#each tabs as tab }
         <TabPanel>
-            {tab.name}
+            {tab.title}
         </TabPanel>
     {/each}
 </Tabs>

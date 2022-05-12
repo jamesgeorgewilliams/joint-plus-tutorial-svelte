@@ -5,7 +5,7 @@
 <script>
 	import { setContext, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
-    import { tabStore } from '../store';
+    import { tabStore, createTabState } from '../store';
 
 	const tabs = [];
 	const panels = [];
@@ -50,7 +50,7 @@
             let index;
             tabStore.update((store) => {
                 index = store.length + 1;
-                return [...store, { id: `tab ${store.length + 1}`, name: `panel ${store.length + 1}`}]
+                return [...store, createTabState(`Tab ${index}`)];
             });
             selectedTab.set(tabs[index]);
 			selectedPanel.set(panels[index]);

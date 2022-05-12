@@ -1,11 +1,21 @@
 import { writable } from 'svelte/store';
+import { dia, shapes, util } from '@clientio/rappid';
+import { TabsData } from './tabs-data';
 
-    let tabs = [
-        { id: 'tab 1', name: 'apple' },
-        { id: 'tab 2', name: 'banana' },
-        { id: 'tab 3', name: 'carrot' },
-        { id: 'tab 4', name: 'doughnut' },
-        { id: 'tab 5', name: 'egg' },
-    ];
+export const createTabState = (title: string, json?: any) => {
+    const graph = new dia.Graph({ id: util.uuid() }, { cellNamespace: shapes });
+    let focusPoint;
+    if (json) {
+      graph.fromJSON(json);
+      focusPoint = graph.getBBox()?.center().toJSON();
+    }
+    return {
+      title,
+      graph,
+      focusPoint
+    }
+}
+
+let tabs = TabsData.map(({ title, json }) => createTabState(title, json));
 
 export const tabStore = writable(tabs);
