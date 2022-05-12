@@ -12,21 +12,23 @@
 
 </script>
 
-<Tabs>
-    <TabList>
-        {#each tabs as tab }
-            <Tab>
+<div class="app">
+    <Tabs>
+        <TabList>
+            {#each tabs as tab }
+                <Tab>
+                    {tab.title}
+                </Tab>
+            {/each}
+        </TabList>
+        {#each tabs as tab, i }
+            <TabPanel>
+                <Graph index={i}></Graph>
                 {tab.title}
-            </Tab>
+            </TabPanel>
         {/each}
-    </TabList>
-    {#each tabs as tab, i }
-        <TabPanel>
-            <Graph index={i}></Graph>
-            {tab.title}
-        </TabPanel>
-    {/each}
-</Tabs>
+    </Tabs>
+</div>
 
 <style>
 </style>

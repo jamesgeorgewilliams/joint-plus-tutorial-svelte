@@ -9,13 +9,15 @@
 </script>
 
 <style>
-	button {
+	.btn {
 		background: none;
 		border: none;
 		border-bottom: 2px solid white;
 		border-radius: 0;
 		margin: 0;
-		color: #ccc;
+		/* color: #ccc; */
+        padding: 6px 12px;
+        cursor: pointer;
 	}
 	
 	.selected {
@@ -24,7 +26,7 @@
 	}
 </style>
 
-<button class:selected="{$selectedTab === tab}" on:click="{() => selectTab(tab)}">
+<button class="btn" class:selected="{$selectedTab === tab}" on:click="{() => selectTab(tab)}">
 	<slot></slot>
-    <button on:click="{() => removeTab(tab)}">x</button>
+    <button class="btn-remove" on:click="{() => removeTab(tab)}">x</button>
 </button>
