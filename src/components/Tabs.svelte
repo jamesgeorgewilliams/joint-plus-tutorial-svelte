@@ -11,7 +11,7 @@
 	const panels = [];
 	const selectedTab = writable(null);
 	const selectedPanel = writable(null);
-    const tabIndex = writable(null);
+    // const tabIndex = writable(null);
 
 	setContext(TABS, {
 		registerTab: tab => {
@@ -42,7 +42,7 @@
 			selectedPanel.set(panels[i]);
 		},
 
-        selectTabByIndex: index => {
+        updateTabByIndex: index => {
             selectedTab.set(tabs[index]);
 			selectedPanel.set(panels[index]);
         },
