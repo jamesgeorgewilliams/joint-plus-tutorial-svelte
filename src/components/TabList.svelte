@@ -21,7 +21,7 @@
 	});
 </script>
 
-<div class="tab-list">
+<div class="tabs-list">
 	<slot></slot>
     <button on:click="{() => addTab()}" data-tooltip="Add a new tab" data-tooltip-position="top">+</button>
 </div>

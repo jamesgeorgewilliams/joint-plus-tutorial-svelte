@@ -29,18 +29,21 @@
 <style>
 	.btn {
 		background: none;
-		border: none;
-		border-bottom: 2px solid white;
-		border-radius: 0;
-		margin: 0;
-		/* color: #ccc; */
+        display: inline-block;
+        border: 1px solid transparent;
+        border-bottom: none;
+        bottom: -1px;
+        position: relative;
+        list-style: none;
         padding: 6px 12px;
         cursor: pointer;
 	}
 	
 	.selected {
-		border-bottom: 2px solid teal;
-		color: #333;
+        background: #fff;
+        border-color: #aaa;
+        color: black;
+        border-radius: 5px 5px 0 0;
 	}
 </style>
 

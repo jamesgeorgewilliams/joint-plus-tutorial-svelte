@@ -16,6 +16,10 @@ body {
     overflow: hidden;
 }
 
+.joint-paper {
+    border: 1px solid lightgray;
+}
+
 .app {
     width: 100%;
     height: 100%;
@@ -27,6 +31,19 @@ body {
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
+}
+
+.tabs-list {
+    width: 100%;
+    max-height: 36px;
+    background: #efefef;
+    border-bottom: 1px solid #aaa;
+    margin: 0;
+}
+
+button {
+    font-size: 15px;
+    margin: 0 10px;
 }
 
 .wrapper {
