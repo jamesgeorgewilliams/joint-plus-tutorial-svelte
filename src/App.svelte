@@ -16,7 +16,9 @@
     <Tabs>
         <TabList>
             {#each tabs as tab }
-                <Tab>
+                <Tab
+                    title={tab.title}
+                >
                     {tab.title}
                 </Tab>
             {/each}
@@ -24,7 +26,7 @@
         {#each tabs as tab, i }
             <TabPanel>
                 <Graph index={i}></Graph>
-                {tab.title}
+                <h2 class="tabs-title">{tab.title}</h2>
             </TabPanel>
         {/each}
     </Tabs>
