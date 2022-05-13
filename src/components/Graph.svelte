@@ -1,5 +1,5 @@
 <script>
-    import { onMount, getContext } from 'svelte';
+    import { onMount, getContext, onDestroy } from 'svelte';
     import { dia, ui, shapes } from '@clientio/rappid';
     import { HyperlinkHighlighter } from '../hyperlink-highlighter.ts';
     import { TABS } from './Tabs.svelte';
@@ -23,6 +23,20 @@
     onMount(async () => {
         appendGraph();
 	});
+
+    onDestroy(() => {
+        const focusPoint = scroller.getVisibleArea().center().toJSON();
+
+        tabs.update((store) => {
+           return store.map((tab, i) => {
+               if (i !== index) return tab;
+               return {
+                   ...tab,
+                   ...focusPoint
+               }
+           });
+       });
+    });
 
     const appendGraph = () => {
         const wrapper = document.querySelector('.wrapper');
@@ -82,68 +96,10 @@
         paper.unfreeze();
     }
 
-    // Change tab attributes at the specified index.
-    // const changeTab = (index, change) => {
-        // setTabs(prevState => prevState.map((tab, i) => {
-        //     if (i !== index) return tab;
-        //     return {
-        //         ...tab,
-        //         ...change
-        //     }
-        // }));
-    // }
-
-    // Select a tab at the specified index
-    // const selectTab = (index) => {
-    //     console.log(index);
-    // }
-    // const selectTab = (index, prevIndex = tabIndex) => {
-        // if (prevIndex === index) return;
-        // if (scroller) {
-        // const focusPoint = scroller.getVisibleArea().center().toJSON();
-        //     changeTab(prevIndex, { focusPoint });
-        // }
-        // setTabIndex(Math.max(Math.min(index, tabs.length - 1), 0));
-    // }
-
-   // Change tab attributes at the specified index
-//    const changeTab = (index, change) => {
-
-//        tabStore.update((store) => {
-//            console.log(store);
-
-//            return store.map((tab, i) => {
-//                if (i !== index) return tab;
-//                return {
-//                    ...tab,
-//                    ...change
-//                }
-//            });
-//        });
-
-//        tabStore.subscribe((store) => {
-//            console.log(store)
-//        })
-//    }
-
-   // Select a tab at the specified index
-//    const selectTab = (index, prevIndex) => {
-//         if (prevIndex === index) return;
-//         if (scroller) {
-//         const focusPoint = scroller.getVisibleArea().center().toJSON();
-//         changeTab(prevIndex, { focusPoint });
-//         }
-//    }
-
    // Select a tab by its graph Id
     const selectGraph = (graphId) => {
-        // const tabsNodeList = document.querySelectorAll('.tab-list > .btn');
-        // const tabsArray = Array.from(tabsNodeList);
-        // const prevIndex = tabsArray.findIndex((tab) => tab.classList.contains('selected'));
         const index = tabs.findIndex(tab => tab.graph.id === graphId);
-        // console.log(index, prevIndex);
         if (index > -1) {
-            // selectTab(index, prevIndex);
             updateTabByIndex(index);
         } else {
         const message = new ui.FlashMessage({

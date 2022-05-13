@@ -11,7 +11,6 @@
 	const panels = [];
 	const selectedTab = writable(null);
 	const selectedPanel = writable(null);
-    // const tabIndex = writable(null);
 
 	setContext(TABS, {
 		registerTab: tab => {
