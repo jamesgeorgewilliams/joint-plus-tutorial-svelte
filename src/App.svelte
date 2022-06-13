@@ -48,10 +48,12 @@
     };
   });
 
+  $: currentGraph = diagrams[0].graph;
+
   onMount(async () => {
     const namespace = shapes;
 
-    const graph = diagrams[0].graph;
+    const graph = currentGraph;
 
     const paper = new dia.Paper({
       el: document.getElementById("root"),
