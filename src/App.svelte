@@ -6,10 +6,22 @@
   import Element from "./icons/Element.svelte";
   import Link from "./icons/Link.svelte";
   import { TreeData } from "./tree-data";
-  // import "carbon-components-svelte/css/white.css";
   import "../node_modules/@clientio/rappid/rappid.css";
+  // import "carbon-components-svelte/css/white.css";
 
   let ref;
+
+  const [initialDiagram = { id: "", cells: [] }] = TreeData;
+  let expandedTreeNodes = initialDiagram.id;
+  let selectedTreeNode = initialDiagram.id;
+
+  const initialGraph = () => {
+    const graph = new dia.Graph({}, { cellNamespace: shapes });
+    graph.fromJSON(initialDiagram);
+    return graph;
+  };
+
+  let graph = initialGraph();
 
   const diagrams = TreeData.map((diagram) => {
     const graph = new dia.Graph({}, { cellNamespace: shapes });
@@ -34,6 +46,7 @@
 
   let activeId = "";
   let selectedIds = [];
+  let hideLabel = true;
   let children = diagrams.map((diagram) => {
     return {
       id: diagram.id,
@@ -48,15 +61,10 @@
     };
   });
 
-  $: currentGraph = diagrams[0].graph;
-
-  onMount(async () => {
+  const appendGraph = (graph) => {
     const namespace = shapes;
 
-    const graph = currentGraph;
-
     const paper = new dia.Paper({
-      el: document.getElementById("root"),
       model: graph,
       frozen: true,
       async: true,
@@ -83,27 +91,31 @@
     });
 
     ref.appendChild(scroller.el);
-    scroller.render().center({ useModelGeometry: true });
+    scroller.render().centerContent({ useModelGeometry: true });
     paper.unfreeze();
+  };
+
+  onMount(async () => {
+    appendGraph(graph);
   });
 </script>
 
 <main class="app">
   <TreeView
+    {hideLabel}
     {children}
     bind:activeId
     bind:selectedIds
-    on:select={({ detail }) => console.log("select", detail)}
+    on:select={({ detail }) => {
+      console.log("select", detail);
+    }}
     on:toggle={({ detail }) => console.log("toggle", detail)}
     on:focus={({ detail }) => console.log("focus", detail)}
   />
-  <!-- <div>Active node id: {activeId}</div>
-    <div>Selected ids: {JSON.stringify(selectedIds)}</div> -->
+  <div>Active node id: {activeId}</div>
+  <div>Selected ids: {JSON.stringify(selectedIds)}</div>
   <div bind:this={ref} class="canvas" />
 </main>
 
 <style>
-  div {
-    margin-top: var(--cds-spacing-05);
-  }
 </style>

@@ -3,6 +3,14 @@ body {
     padding: 0;
     height: 100vh;
     width: 100vw;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 
@@ -11,10 +19,10 @@ body {
     flex-direction: row;
 }
 
-.joint-paper {
-    border: 1px solid #A0A0A0;
+.canvas {
+    width: 75%;
+    /* height: 100vh; */
 }
-
 
 /* 
     TreeView
@@ -22,10 +30,25 @@ body {
 
 ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.bx--label {
-    display: none;
+ul, li {
+    cursor: pointer;
+}
+
+.bx--tree-node__label:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.bx--tree-parent-node,
+.bx--tree-leaf-node {
+    padding-left: 4px;
+}
+
+.bx--tree-leaf-node {
+    padding-left: 16px;
 }
 
 .bx--tree {
@@ -44,3 +67,6 @@ ul {
     transform: rotate(270deg);
 }
 
+/* 
+    TreeView Animation
+*/
