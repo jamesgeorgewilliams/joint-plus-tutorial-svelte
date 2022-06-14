@@ -37,9 +37,9 @@ export const TreeData = [{
             body: {
                 d: 'M 0 calc(0.5 * h) calc(0.5 * w) 0 calc(w) calc(0.5 * h) calc(0.5 * w) calc(h) Z'
             },
-                label: {
-                    text: 'Decision'
-                }
+            label: {
+                text: 'Decision'
+            }
         }
     }, {
         id: 'r4',
@@ -116,12 +116,12 @@ export const TreeData = [{
     }, {
         id: 'l6',
         type: 'standard.Link',
-        source: { id: 'r1', anchor: { name: 'center', args: { dy: -10 }}},
-        target: { id: 'r2', anchor: { name: 'center', args: { dy: -10 }}},
+        source: { id: 'r1', anchor: { name: 'center', args: { dy: -10 } } },
+        target: { id: 'r2', anchor: { name: 'center', args: { dy: -10 } } },
     }, {
         id: 'l7',
         type: 'standard.Link',
-        source: { id: 'r1', anchor: { name: 'center', args: { dy: 10 }}},
-        target: { id: 'r2', anchor: { name: 'center', args: { dy: 10 }}}
+        source: { id: 'r1', anchor: { name: 'center', args: { dy: 10 } } },
+        target: { id: 'r2', anchor: { name: 'center', args: { dy: 10 } } }
     }],
 }];
