@@ -81,7 +81,8 @@
       }
     }
     graph.set('selectedCell', cellId);
-    handleExpandedIds(detail);
+    activeId = detail.id;
+    selectedIds = [...detail.id];
   };
 
   onMount(() => {
@@ -128,6 +129,7 @@
       if (!expandedIds.includes(nodeId.split('-')[0])) {
         expandedIds = [...expandedIds, nodeId.split('-')[0]];
       }
+      document.getElementById(nodeId).focus();
     });
 
     paper.on('blank:pointerclick', () => {
@@ -177,8 +179,12 @@
     bind:activeId
     bind:selectedIds
     bind:expandedIds
-    on:select={({ detail }) => selectNode(detail)}
+    on:select={({ detail }) => {
+      selectNode(detail);
+      handleExpandedIds(detail);
+    }}
     on:toggle={({ detail }) => handleExpandedIds(detail)}
+    on:focus={({ detail }) => selectNode(detail)}
   />
   <div bind:this={canvasEl} class="canvas" />
 </main>

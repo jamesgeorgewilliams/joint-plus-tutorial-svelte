@@ -51,13 +51,20 @@ ul {
   padding: 0;
 }
 
-.bx--tree-node__label:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+.bx--tree {
+    min-width: 200px;
+    width: 25%;
+    height: 100vh;
+    border-right: 1px solid #E2E2E2;
+    background-color: #F5F5F5;
 }
 
-.bx--tree-parent-node,
-.bx--tree-leaf-node {
+.bx--tree-parent-node {
     padding-left: 4px;
+}
+
+.bx--tree-leaf-node {
+    padding-left: 16px;
 }
 
 .bx--tree-parent-node,
@@ -65,16 +72,14 @@ ul {
     cursor: pointer;
 }
 
-.bx--tree-leaf-node {
-    padding-left: 16px;
+.bx--tree-node__label:hover {
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
-.bx--tree {
-    min-width: 200px;
-    width: 25%;
-    height: 100vh;
-    border-right: 1px solid #E2E2E2;
-    background-color: #F5F5F5;
+.bx--tree-node--active > .bx--tree-node__label, 
+.bx--tree-node--selected > .bx--tree-node__label {
+    background: #08B081;
+    color: #ffffff;
 }
 
 .bx--tree-parent-node__toggle-icon:hover {
@@ -85,10 +90,6 @@ ul {
     transform: rotate(270deg);
 }
 
-[aria-selected=true] > .bx--tree-node__label {
-    background: #08B081;
-    color: #ffffff;
-}
 
 /* 
     TreeView Animation
