@@ -1,4 +1,6 @@
-<script lang="ts">
-</script>
+<!-- 
+    https://carbon-components-svelte.onrender.com/components/TreeView
+    Carbon svelte componets requires icon to be svelte componenet
+ -->
 
-<span class="bx--tree-node__icon">▱</span>
+<span {...$$restProps}>▱</span>

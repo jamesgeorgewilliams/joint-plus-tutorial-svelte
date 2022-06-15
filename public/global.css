@@ -1,8 +1,6 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    width: 100vw;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,17 +9,24 @@ body {
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.5;
+    user-select: none;
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
 }
 
 
 .app {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
 }
 
 .canvas {
     width: 75%;
-    /* height: 100vh; */
 }
 
 .joint-highlight-mask {
@@ -49,6 +54,10 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+li:focus {
+    outline: none;
 }
 
 .bx--tree {
@@ -82,6 +91,10 @@ ul {
     color: #ffffff;
 }
 
+.bx--tree-parent-node__toggle {
+    vertical-align: middle;
+}
+
 .bx--tree-parent-node__toggle-icon:hover {
     cursor: pointer;
 }
@@ -89,8 +102,3 @@ ul {
 .bx--tree-parent-node__toggle-icon.false {
     transform: rotate(270deg);
 }
-
-
-/* 
-    TreeView Animation
-*/
