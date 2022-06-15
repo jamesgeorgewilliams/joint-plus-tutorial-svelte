@@ -85,8 +85,7 @@ ul {
     transform: rotate(270deg);
 }
 
-
-[aria-current=true] {
+[aria-selected=true] > .bx--tree-node__label {
     background: #08B081;
     color: #ffffff;
 }

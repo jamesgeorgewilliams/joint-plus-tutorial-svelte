@@ -7,20 +7,14 @@
   import { TreeData } from './tree-data';
   import '../node_modules/@clientio/rappid/rappid.css';
 
-  let ref;
+  let canvasEl;
 
   const [initialDiagram = { id: '', cells: [] }] = TreeData;
+  let prevDiagram = initialDiagram.id;
 
-  let graph = (function () {
-    const graph = new dia.Graph({}, { cellNamespace: shapes });
-    graph.fromJSON(initialDiagram);
-    return graph;
-  })();
-
-  const diagrams = TreeData.map((diagram) => {
+  let diagrams = TreeData.map((diagram) => {
     const graph = new dia.Graph({}, { cellNamespace: shapes });
     graph.fromJSON(diagram);
-
     return {
       id: diagram.id,
       name: diagram.name,
@@ -42,9 +36,9 @@
     TreeView Props
     https://carbon-components-svelte.onrender.com/components/TreeView
   */
-  let activeId = '';
-  let selectedIds = [];
-  let expandedIds = [];
+  let activeId = initialDiagram.id;
+  let selectedIds = [...initialDiagram.id];
+  let expandedIds = [initialDiagram.id];
   let hideLabel = true;
   // Create TreeItems according to carbon svelte componet requirements
   let children = diagrams.map((diagram) => {
@@ -60,6 +54,35 @@
       }),
     };
   });
+
+  let graph = (function () {
+    const graph = new dia.Graph({}, { cellNamespace: shapes });
+    graph.fromJSON(initialDiagram);
+    return graph;
+  })();
+
+  const handleExpandedIds = (detail) => {
+    if (detail.leaf === false) {
+      if (expandedIds.includes(detail.id)) {
+        expandedIds = expandedIds.filter((id) => id !== detail.id);
+      } else {
+        expandedIds = [...expandedIds, detail.id];
+      }
+    }
+  };
+
+  const selectNode = (detail) => {
+    const [diagramId, cellId = null] = detail.id.split('-');
+    if (diagramId !== prevDiagram) {
+      const diagram = diagrams.find((diagram) => diagram.id === diagramId);
+      if (diagram) {
+        graph.fromJSON(diagram.graph.toJSON());
+        prevDiagram = diagramId;
+      }
+    }
+    graph.set('selectedCell', cellId);
+    handleExpandedIds(detail);
+  };
 
   onMount(() => {
     const namespace = shapes;
@@ -90,7 +113,7 @@
       },
     });
 
-    ref.appendChild(scroller.el);
+    canvasEl.appendChild(scroller.el);
     scroller.render().centerContent({ useModelGeometry: true });
     paper.unfreeze();
 
@@ -145,30 +168,6 @@
       }
     });
   });
-
-  const selectNode = (nodeId) => {
-    const [diagramId, cellId = null] = nodeId.split('-');
-    // const [selectedDiagramId] = selectedTreeNode.split('-');
-    // if (diagramId !== selectedDiagramId) {
-    //   const prevDiagram = diagrams.find(
-    //     (diagram) => diagram.id === selectedDiagramId
-    //   );
-    //   if (prevDiagram) {
-    //     // Save Changes (not in use since the demo is in view-only mode)
-    //     prevDiagram.graph.fromJSON(graph.toJSON());
-    //   }
-    //   const diagram = diagrams.find((diagram) => diagram.id === diagramId);
-    //   if (diagram) {
-    //     graph.fromJSON(diagram.graph.toJSON());
-    //   }
-    //   graph.set("selectedCell", cellId);
-    // }
-    const diagram = diagrams.find((diagram) => diagram.id === diagramId);
-    if (diagram) {
-      graph.fromJSON(diagram.graph.toJSON());
-    }
-    graph.set('selectedCell', cellId);
-  };
 </script>
 
 <main class="app">
@@ -178,21 +177,10 @@
     bind:activeId
     bind:selectedIds
     bind:expandedIds
-    on:select={({ detail }) => {
-      selectNode(detail.id);
-      //   if (detail.leaf === false && detail.expanded === false) {
-      //     //@ts-ignore
-      //     expandedIds = [...expandedIds, detail.id.split('-')[0]];
-      //   }
-      //   if (detail.leaf === false && detail.expanded === true) {
-      //     //@ts-ignore
-      //     expandedIds = expandedIds.filter((id) => id !== detail.id);
-      //   }
-    }}
-    on:toggle={({ detail }) => console.log('toggle', detail)}
-    on:focus={({ detail }) => console.log('focus', detail)}
+    on:select={({ detail }) => selectNode(detail)}
+    on:toggle={({ detail }) => handleExpandedIds(detail)}
   />
-  <div bind:this={ref} class="canvas" />
+  <div bind:this={canvasEl} class="canvas" />
 </main>
 
 <style>
